@@ -1,26 +1,24 @@
 package com.castelli.acervo.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.castelli.acervo.domain.Pais;
+import com.castelli.acervo.services.PaisService;
 
 @RestController
 @RequestMapping(value="/paises")
 public class PaisResource {
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public List<Pais> find() {
-		Pais p1 = new Pais(1, "Alemanha");
-		Pais p2 = new Pais(2, "Brasil");
-		List<Pais> lista = new ArrayList<>();
-		lista.add(p1);
-		lista.add(p2);
-		
-		return lista;
+	@Autowired
+	private PaisService service;
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Pais> find(@PathVariable Integer id) {
+		Pais obj = service.find(id);
+		return ResponseEntity.ok().body(obj);		
 	}
 }
