@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.castelli.acervo.domain.Pais;
-import com.castelli.acervo.repositories.PaisRepository;
+import com.castelli.acervo.domain.Funcao;
+import com.castelli.acervo.repositories.FuncaoRepository;
 
 @SpringBootApplication
 public class AcervoApplication implements CommandLineRunner {
 
 	@Autowired
-	private PaisRepository paisRepository;
+	private FuncaoRepository funcaoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(AcervoApplication.class, args);
@@ -21,12 +21,8 @@ public class AcervoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Pais p1 = new Pais(null, "Alemanha");
-		Pais p2 = new Pais(null, "Rússia");
-		Pais p3 = new Pais(null, "Áustria");
-		Pais p4 = new Pais(null, "Polônia");
-		Pais p5 = new Pais(null, "Brasil");
-		paisRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
-		
+		Funcao f1 = new Funcao(null, "Compositor");
+        Funcao f2 = new Funcao(null, "Cantor");
+        funcaoRepository.saveAll(Arrays.asList(f1,f2));
 	}
 }

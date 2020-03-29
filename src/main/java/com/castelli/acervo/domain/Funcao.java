@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Pais implements Serializable {
+public class Funcao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -15,9 +15,9 @@ public class Pais implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	public Pais() {}
+	public Funcao() {}
 
-	public Pais(Integer id, String nome) {
+	public Funcao(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
@@ -54,7 +54,7 @@ public class Pais implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pais other = (Pais) obj;
+		Funcao other = (Funcao) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
