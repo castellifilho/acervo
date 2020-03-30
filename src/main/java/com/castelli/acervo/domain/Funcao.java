@@ -1,10 +1,15 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Funcao implements Serializable {
@@ -14,6 +19,10 @@ public class Funcao implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "funcoes")
+	private List<Artista> artistas = new ArrayList<>();
 	
 	public Funcao() {}
 
@@ -38,6 +47,14 @@ public class Funcao implements Serializable {
 		this.nome = nome;
 	}
 
+	public List<Artista> getArtistas() {
+		return artistas;
+	}
+
+	public void setArtistas(List<Artista> artistas) {
+		this.artistas = artistas;
+	}	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

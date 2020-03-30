@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.castelli.acervo.domain.Funcao;
 import com.castelli.acervo.repositories.FuncaoRepository;
+import com.castelli.acervo.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class FuncaoService {
@@ -14,7 +15,7 @@ public class FuncaoService {
 	
 	public Funcao find(Integer id) {
 		Optional<Funcao> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Funcao.class.getName()));
 	}
 }
-
