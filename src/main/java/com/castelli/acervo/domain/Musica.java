@@ -1,39 +1,38 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Funcao implements Serializable {
+public class Musica implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;	
 	private String nome;
 	
-	@ManyToMany(mappedBy = "funcoes")
-	private List<Artista> artistas = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "genero_id")
+	private Genero genero;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "id.funcao")
+	@OneToMany(mappedBy = "id.musica")
 	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
 	
-	public Funcao() {}
+	public Musica() {}
 
-	public Funcao(Integer id, String nome) {
+	public Musica(Integer id, String nome, Genero genero) {
 		this.id = id;
 		this.nome = nome;
+		this.genero = genero;
 	}
 
 	public Integer getId() {
@@ -52,23 +51,23 @@ public class Funcao implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Artista> getArtistas() {
-		return artistas;
+	public Genero getGenero() {
+		return genero;
 	}
 
-	public void setArtistas(List<Artista> artistas) {
-		this.artistas = artistas;
-	}	
-	
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
+
 	public Set<MusicaArtistaFuncao> getMusicaItens() {
 		return musicaItens;
 	}
 
-	@OneToMany(mappedBy = "id.funcao")
+	@OneToMany(mappedBy = "id.musica")
 	public void setMusicaItens(Set<MusicaArtistaFuncao> musicaItens) {
 		this.musicaItens = musicaItens;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -85,7 +84,7 @@ public class Funcao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcao other = (Funcao) obj;
+		Musica other = (Musica) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

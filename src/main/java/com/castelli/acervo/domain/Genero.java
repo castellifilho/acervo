@@ -1,39 +1,32 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Funcao implements Serializable {
+public class Genero implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
-	@ManyToMany(mappedBy = "funcoes")
-	private List<Artista> artistas = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "pais_id")
+	private Pais pais;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "id.funcao")
-	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
-	
-	public Funcao() {}
+	public Genero() {}
 
-	public Funcao(Integer id, String nome) {
+	public Genero(Integer id, String nome, Pais pais) {
 		this.id = id;
 		this.nome = nome;
+		this.pais = pais;
 	}
 
 	public Integer getId() {
@@ -52,21 +45,12 @@ public class Funcao implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Artista> getArtistas() {
-		return artistas;
+	public Pais getPais() {
+		return pais;
 	}
 
-	public void setArtistas(List<Artista> artistas) {
-		this.artistas = artistas;
-	}	
-	
-	public Set<MusicaArtistaFuncao> getMusicaItens() {
-		return musicaItens;
-	}
-
-	@OneToMany(mappedBy = "id.funcao")
-	public void setMusicaItens(Set<MusicaArtistaFuncao> musicaItens) {
-		this.musicaItens = musicaItens;
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 	
 	@Override
@@ -85,7 +69,7 @@ public class Funcao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcao other = (Funcao) obj;
+		Genero other = (Genero) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

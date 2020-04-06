@@ -2,36 +2,30 @@ package com.castelli.acervo.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Funcao implements Serializable {
+public class Pais implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	private Integer id;
 	private String nome;
 	
-	@ManyToMany(mappedBy = "funcoes")
+	@JsonIgnore
+	@OneToMany(mappedBy = "pais")
 	private List<Artista> artistas = new ArrayList<>();
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "id.funcao")
-	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
-	
-	public Funcao() {}
+	public Pais() {}
 
-	public Funcao(Integer id, String nome) {
+	public Pais(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
@@ -58,17 +52,8 @@ public class Funcao implements Serializable {
 
 	public void setArtistas(List<Artista> artistas) {
 		this.artistas = artistas;
-	}	
-	
-	public Set<MusicaArtistaFuncao> getMusicaItens() {
-		return musicaItens;
 	}
 
-	@OneToMany(mappedBy = "id.funcao")
-	public void setMusicaItens(Set<MusicaArtistaFuncao> musicaItens) {
-		this.musicaItens = musicaItens;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -85,7 +70,7 @@ public class Funcao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcao other = (Funcao) obj;
+		Pais other = (Pais) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

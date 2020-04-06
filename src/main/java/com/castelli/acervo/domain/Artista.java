@@ -2,7 +2,9 @@ package com.castelli.acervo.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Artista implements Serializable {
@@ -24,21 +28,30 @@ public class Artista implements Serializable {
 	private Integer nascimento;
 	private Integer obito;
 	
-	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "pais_id")
+	private Pais pais;
+	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "ARTISTA_FUNCAO",
 	        joinColumns = @JoinColumn(name = "artista_id"),
 	        inverseJoinColumns = @JoinColumn(name = "funcao_id"))
 	private List<Funcao> funcoes = new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "id.artista")
+	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
+	
 	public Artista() {}
 
-	public Artista(Integer id, String alias, String nome, Integer nascimento, Integer obito) {
+	public Artista(Integer id, String alias, String nome, Integer nascimento, Integer obito, Pais pais) {
 		this.id = id;
 		this.alias = alias;
 		this.nome = nome;
 		this.nascimento = nascimento;
 		this.obito = obito;
+		this.pais = pais;
 	}
 
 	public Integer getId() {
@@ -88,6 +101,15 @@ public class Artista implements Serializable {
 	public void setFuncoes(List<Funcao> funcoes) {
 		this.funcoes = funcoes;
 	}
+	
+	public Set<MusicaArtistaFuncao> getMusicaItens() {
+		return musicaItens;
+	}
+
+	@OneToMany(mappedBy = "id.artista")
+	public void setMusicaItens(Set<MusicaArtistaFuncao> musicaItens) {
+		this.musicaItens = musicaItens;
+	}
 
 	@Override
 	public int hashCode() {
@@ -112,5 +134,13 @@ public class Artista implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 }
