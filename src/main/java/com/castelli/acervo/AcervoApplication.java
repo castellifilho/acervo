@@ -6,14 +6,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.castelli.acervo.domain.Artista;
+import com.castelli.acervo.domain.Estilo;
 import com.castelli.acervo.domain.Funcao;
 import com.castelli.acervo.domain.Genero;
+import com.castelli.acervo.domain.Movimento;
 import com.castelli.acervo.domain.Musica;
 import com.castelli.acervo.domain.MusicaArtistaFuncao;
+import com.castelli.acervo.domain.MusicaEstilo;
+import com.castelli.acervo.domain.MusicaMovimento;
 import com.castelli.acervo.domain.Pais;
 import com.castelli.acervo.repositories.ArtistaRepository;
+import com.castelli.acervo.repositories.EstiloRepository;
 import com.castelli.acervo.repositories.FuncaoRepository;
 import com.castelli.acervo.repositories.GeneroRepository;
+import com.castelli.acervo.repositories.MovimentoRepository;
 import com.castelli.acervo.repositories.MusicaArtistaFuncaoRepository;
 import com.castelli.acervo.repositories.MusicaRepository;
 import com.castelli.acervo.repositories.PaisRepository;
@@ -30,10 +36,14 @@ public class AcervoApplication implements CommandLineRunner {
 	@Autowired
 	private GeneroRepository generoRepository;
 	@Autowired
+	private EstiloRepository estiloRepository;
+	@Autowired
 	private MusicaRepository musicaRepository;
 	@Autowired
 	private MusicaArtistaFuncaoRepository musicaArtistaFuncaoRepository;
-
+	@Autowired
+	private MovimentoRepository movimentoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(AcervoApplication.class, args);
 	}
@@ -68,23 +78,47 @@ public class AcervoApplication implements CommandLineRunner {
 		a7.getFuncoes().addAll(Arrays.asList(f1, f2));
 		a8.getFuncoes().addAll(Arrays.asList(f1));
 		a9.getFuncoes().addAll(Arrays.asList(f1, f2));
+		Genero g1 = new Genero(null, "Clássico", p6);
+		Genero g2 = new Genero(null, "Samba", p5);
+		Estilo e1 = new Estilo(null, "Concerto");
+		Estilo e2 = new Estilo(null, "Ballet ");
+		Estilo e3 = new Estilo(null, "Suite");
+		Estilo e4 = new Estilo(null, "Ópera");
+		Estilo e5 = new Estilo(null, "Barcarola");
+		Estilo e6 = new Estilo(null, "Partita");
 		paisRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 		funcaoRepository.saveAll(Arrays.asList(f1, f2));
 		artistaRepository.saveAll(Arrays.asList(a1, a2, a3, a4, a5, a6, a7, a8, a9));
+		generoRepository.saveAll(Arrays.asList(g1, g2));
+		estiloRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5, e6));
 		
-		Genero g1 = new Genero(null, "Clássico", p6);
-		Genero g2 = new Genero(null, "Samba", p5);
-		Musica m1 = new Musica(null, "Concerto para Piano e Orquestra nº 5", g1);
-		Musica m2 = new Musica(null, "O Lago dos Cisnes", g1); 
-		Musica m3 = new Musica(null, "Quadros de Uma Exposição", g1);
-		Musica m4 = new Musica(null, "Don Giovanni", g1);
-		Musica m5 = new Musica(null, "Barcarole", g1);
-		Musica m6 = new Musica(null, "Partita nº 4", g1);
+		Musica m1 = new MusicaMovimento(null, "Concerto para Piano e Orquestra nº 5", g1, "Opus 73 (Imperador)", e1);
+		Musica m2 = new MusicaMovimento(null, "O Lago dos Cisnes", g1, null, e2 ); 
+		Musica m3 = new MusicaMovimento(null, "Quadros de Uma Exposição", g1, null, e3);
+		Musica m4 = new MusicaMovimento(null, "Don Giovanni", g1, null, e4);
+		Musica m5 = new MusicaEstilo(null, "Barcarole", g1,  "Opus 60", e5);
+		Musica m6 = new MusicaMovimento (null, "Partita nº 4", g1, null, e6);
 		Musica m7 = new Musica(null, "Página de Dôr", g2);
 		Musica m8 = new Musica(null, "Urubu", g2);
-		generoRepository.saveAll(Arrays.asList(g1, g2));
 		musicaRepository.saveAll(Arrays.asList(m1, m2, m3, m4, m5, m6, m7, m8));
-		
+				
+		Movimento mov1 = new Movimento(null, "1º", "Allegro", (MusicaMovimento) m1);
+		Movimento mov2 = new Movimento(null, "2º", "Adagio um poco mosso", (MusicaMovimento) m1);
+		Movimento mov3 = new Movimento(null, "3º", "Rondó (Allegro)", (MusicaMovimento) m1);
+		Movimento mov4 = new Movimento(null, "1", "Cena", (MusicaMovimento) m2);
+		Movimento mov5 = new Movimento(null, "2", "Valsa", (MusicaMovimento) m2);
+		Movimento mov6 = new Movimento(null, "3", "Dança dos Cisnes", (MusicaMovimento) m2);
+		Movimento mov7 = new Movimento(null, "4", "Cena", (MusicaMovimento) m2);
+		Movimento mov8 = new Movimento(null, "5", "Dança Húngara: Czards", (MusicaMovimento) m2);
+		Movimento mov9 = new Movimento(null, "1", "Promedame", (MusicaMovimento) m3);
+		Movimento mov10 = new Movimento(null, "2", "Gnomus", (MusicaMovimento) m3);
+		Movimento mov11 = new Movimento(null, "15", "La Grande Porte de Kiev", (MusicaMovimento) m3);
+		Movimento mov12 = new Movimento(null, "1", "Abertura", (MusicaMovimento) m4);
+		Movimento mov13 = new Movimento(null, "Ato I (cena V)", "Madamina, il catalogo è questo", (MusicaMovimento) m4);
+		Movimento mov14 = new Movimento(null, "Ato II (cena III)", "Deb, vieni ala finestra", (MusicaMovimento) m4);
+		Movimento mov15 = new Movimento(null, "1", "Overture", (MusicaMovimento) m6);
+		Movimento mov16 = new Movimento(null, "2", "Allemande", (MusicaMovimento) m6);
+		Movimento mov17 = new Movimento(null, "7", "Gigue", (MusicaMovimento) m6);
 		MusicaArtistaFuncao maf1 = new MusicaArtistaFuncao(m1, a1, f1); 
 		MusicaArtistaFuncao maf2 = new MusicaArtistaFuncao(m2, a2, f1);
 		MusicaArtistaFuncao maf3 = new MusicaArtistaFuncao(m3, a4, f1);
@@ -102,8 +136,9 @@ public class AcervoApplication implements CommandLineRunner {
 		m6.getMusicaItens().addAll(Arrays.asList(maf6));
 		m7.getMusicaItens().addAll(Arrays.asList(maf7, maf9));
 		m8.getMusicaItens().addAll(Arrays.asList(maf8));
-		
-		musicaArtistaFuncaoRepository.saveAll(Arrays.asList(maf1, maf2, maf3, maf4, maf5, maf6, maf7, maf8, maf9));
-
+		movimentoRepository.saveAll(Arrays.asList(mov1, mov2, mov3, mov4, mov5, mov6, mov7, 
+				mov8, mov9, mov10, mov11, mov12, mov13, mov14, mov15, mov16, mov17));
+		musicaArtistaFuncaoRepository.saveAll(Arrays.asList(maf1, maf2, maf3, maf4, maf5, 
+				maf6, maf7, maf8, maf9));
 	}
 }
