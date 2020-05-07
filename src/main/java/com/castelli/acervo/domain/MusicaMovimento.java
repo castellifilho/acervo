@@ -18,7 +18,7 @@ public class MusicaMovimento extends Musica {
 	@JoinColumn(name = "estilo_id")
 	private Estilo estilo;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@OneToMany(mappedBy="musicaMovimento")
 	private List<Movimento> movimentos = new ArrayList<>();
 	
@@ -46,6 +46,7 @@ public class MusicaMovimento extends Musica {
 		this.estilo = estilo;
 	}
 
+	@JsonIgnore
 	public List<Movimento> getMovimentos() {
 		return movimentos;
 	}
@@ -54,3 +55,4 @@ public class MusicaMovimento extends Musica {
 		this.movimentos = movimentos;
 	}
 }
+

@@ -1,42 +1,32 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Musica implements Serializable {
+public class Selo implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	private String nome;
 	
 	@ManyToOne
-	@JoinColumn(name = "genero_id")
-	private Genero genero;
+	@JoinColumn(name = "gravadora_id")
+	private Gravadora gravadora;
 	
-	@OneToMany(mappedBy = "id.musica")
-	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
-	
-	public Musica() {}
+	public Selo() {}
 
-	public Musica(Integer id, String nome, Genero genero) {
+	public Selo(Integer id, String nome, Gravadora gravadora) {
 		this.id = id;
 		this.nome = nome;
-		this.genero = genero;
+		this.gravadora = gravadora;
 	}
 
 	public Integer getId() {
@@ -55,22 +45,12 @@ public class Musica implements Serializable {
 		this.nome = nome;
 	}
 
-	public Genero getGenero() {
-		return genero;
+	public Gravadora getGravadora() {
+		return gravadora;
 	}
 
-	public void setGenero(Genero genero) {
-		this.genero = genero;
-	}
-
-	@JsonIgnore          // Acrescentei 7/04
-	public Set<MusicaArtistaFuncao> getMusicaItens() {
-		return musicaItens;
-	}
-
-	@OneToMany(mappedBy = "id.musica")
-	public void setMusicaItens(Set<MusicaArtistaFuncao> musicaItens) {
-		this.musicaItens = musicaItens;
+	public void setGravadora(Gravadora gravadora) {
+		this.gravadora = gravadora;
 	}
 
 	@Override
@@ -89,7 +69,7 @@ public class Musica implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Musica other = (Musica) obj;
+		Selo other = (Selo) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

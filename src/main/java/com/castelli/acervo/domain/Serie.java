@@ -1,7 +1,6 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,27 +9,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Movimento implements Serializable {
+public class Serie implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String movimento;
-	private String andamento;
+	private String numero; 
 	
-	//@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="musica_id")
-	private Musica musicaMovimento;
+	@JoinColumn(name = "colecao_id")
+	private Colecao colecao;
 	
-	public Movimento() {}
+	public Serie() {}
 
-	public Movimento(Integer id, String movimento, String andamento, Musica musicaMovimento) {
+	public Serie(Integer id, String numero, Colecao colecao) {
 		this.id = id;
-		this.movimento = movimento;
-		this.andamento = andamento;
-		this.musicaMovimento = musicaMovimento;
+		this.numero = numero;
+		this.colecao = colecao;
 	}
 
 	public Integer getId() {
@@ -41,30 +37,22 @@ public class Movimento implements Serializable {
 		this.id = id;
 	}
 
-	public String getMovimento() {
-		return movimento;
+	public String getNumero() {
+		return numero;
 	}
 
-	public void setMovimento(String movimento) {
-		this.movimento = movimento;
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
-	public String getAndamento() {
-		return andamento;
+	public Colecao getColecao() {
+		return colecao;
 	}
 
-	public void setAndamento(String andamento) {
-		this.andamento = andamento;
+	public void setColecao(Colecao colecao) {
+		this.colecao = colecao;
 	}
 
-	public Musica getMusicaMovimento() {
-		return musicaMovimento;
-	}
-
-	public void setMusicaMovimento(Musica musicaMovimento) {
-		this.musicaMovimento = musicaMovimento;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,7 +69,7 @@ public class Movimento implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Movimento other = (Movimento) obj;
+		Serie other = (Serie) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -90,4 +78,3 @@ public class Movimento implements Serializable {
 		return true;
 	}
 }
-

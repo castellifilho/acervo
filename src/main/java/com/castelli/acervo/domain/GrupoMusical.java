@@ -1,42 +1,39 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Musica implements Serializable {
+public class GrupoMusical implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;	
-	private String nome;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String nome; 
+	private String componentes;
 	
 	@ManyToOne
-	@JoinColumn(name = "genero_id")
-	private Genero genero;
+	@JoinColumn(name = "grupo_id")
+	private Grupo grupo;	
 	
-	@OneToMany(mappedBy = "id.musica")
-	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
-	
-	public Musica() {}
+	@ManyToOne
+	@JoinColumn(name = "pais_id")
+	private Pais pais;
 
-	public Musica(Integer id, String nome, Genero genero) {
+	public GrupoMusical() {}
+
+	public GrupoMusical(Integer id, String nome, String componentes, Grupo grupo, Pais pais) {
 		this.id = id;
 		this.nome = nome;
-		this.genero = genero;
+		this.componentes = componentes;
+		this.grupo = grupo;
+		this.pais = pais;
 	}
 
 	public Integer getId() {
@@ -55,22 +52,28 @@ public class Musica implements Serializable {
 		this.nome = nome;
 	}
 
-	public Genero getGenero() {
-		return genero;
+	public String getComponentes() {
+		return componentes;
 	}
 
-	public void setGenero(Genero genero) {
-		this.genero = genero;
+	public void setComponentes(String componentes) {
+		this.componentes = componentes;
 	}
 
-	@JsonIgnore          // Acrescentei 7/04
-	public Set<MusicaArtistaFuncao> getMusicaItens() {
-		return musicaItens;
+	public Grupo getGrupo() {
+		return grupo;
 	}
 
-	@OneToMany(mappedBy = "id.musica")
-	public void setMusicaItens(Set<MusicaArtistaFuncao> musicaItens) {
-		this.musicaItens = musicaItens;
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 
 	@Override
@@ -89,7 +92,7 @@ public class Musica implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Musica other = (Musica) obj;
+		GrupoMusical other = (GrupoMusical) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -29,6 +29,10 @@ public class Funcao implements Serializable {
 	@OneToMany(mappedBy = "id.funcao")
 	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "id.funcao")
+	private Set<FaixaCredito> faixaItens = new HashSet<>();
+	
 	public Funcao() {}
 
 	public Funcao(Integer id, String nome) {
@@ -67,6 +71,15 @@ public class Funcao implements Serializable {
 	@OneToMany(mappedBy = "id.funcao")
 	public void setMusicaItens(Set<MusicaArtistaFuncao> musicaItens) {
 		this.musicaItens = musicaItens;
+	}
+	
+	public Set<FaixaCredito> getFaixaItens() {
+		return faixaItens;
+	}
+
+	@OneToMany(mappedBy = "id.funcao")
+	public void setFaixaItens(Set<FaixaCredito> faixaItens) {
+		this.faixaItens = faixaItens;
 	}
 	
 	@Override

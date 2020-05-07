@@ -43,6 +43,9 @@ public class Artista implements Serializable {
 	@OneToMany(mappedBy = "id.artista")
 	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
 	
+	@OneToMany(mappedBy = "id.artista")
+	private Set<FaixaCredito> faixaItens = new HashSet<>();
+	
 	public Artista() {}
 
 	public Artista(Integer id, String alias, String nome, Integer nascimento, Integer obito, Pais pais) {
@@ -93,6 +96,14 @@ public class Artista implements Serializable {
 	public void setObito(Integer obito) {
 		this.obito = obito;
 	}
+	
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
 
 	public List<Funcao> getFuncoes() {
 		return funcoes;
@@ -102,6 +113,7 @@ public class Artista implements Serializable {
 		this.funcoes = funcoes;
 	}
 	
+	@JsonIgnore     // Acrescentei 7/04                                 
 	public Set<MusicaArtistaFuncao> getMusicaItens() {
 		return musicaItens;
 	}
@@ -109,6 +121,16 @@ public class Artista implements Serializable {
 	@OneToMany(mappedBy = "id.artista")
 	public void setMusicaItens(Set<MusicaArtistaFuncao> musicaItens) {
 		this.musicaItens = musicaItens;
+	}
+	
+	@JsonIgnore
+	public Set<FaixaCredito> getFaixaItens() {
+		return faixaItens;
+	}
+
+	@OneToMany(mappedBy = "id.artista")
+	public void setFaixaItens(Set<FaixaCredito> faixaItens) {
+		this.faixaItens = faixaItens;
 	}
 
 	@Override
@@ -134,13 +156,5 @@ public class Artista implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	public Pais getPais() {
-		return pais;
-	}
-
-	public void setPais(Pais pais) {
-		this.pais = pais;
 	}
 }

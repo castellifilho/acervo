@@ -6,23 +6,23 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class MusicaArtistaFuncao implements Serializable {
+public class FaixaCredito implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@JsonIgnore
 	@EmbeddedId
-	private MusicaArtistaFuncaoPK id = new MusicaArtistaFuncaoPK();
+	private FaixaCreditoPK id = new FaixaCreditoPK();
 	
-	public MusicaArtistaFuncao() {}
+	public FaixaCredito() {}
 	
-	public MusicaArtistaFuncao(Musica musica, Artista artista, Funcao funcao) {
-		id.setMusica(musica);
+	public FaixaCredito(Faixa faixa, Artista artista, Funcao funcao) {
+		id.setFaixa(faixa);
 		id.setArtista(artista);
 		id.setFuncao(funcao);
 	}
-
-	public Musica getMusica() {
-		return id.getMusica();
+	
+	public Faixa getFaixa() {
+		return id.getFaixa();
 	}
 	
 	@JsonIgnore
@@ -34,11 +34,11 @@ public class MusicaArtistaFuncao implements Serializable {
 		return id.getFuncao();
 	}
 	
-	public MusicaArtistaFuncaoPK getId() {
+	public FaixaCreditoPK getId() {
 		return id;
 	}
 
-	public void setId(MusicaArtistaFuncaoPK id) {
+	public void setId(FaixaCreditoPK id) {
 		this.id = id;
 	}
 
@@ -58,7 +58,7 @@ public class MusicaArtistaFuncao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MusicaArtistaFuncao other = (MusicaArtistaFuncao) obj;
+		FaixaCredito other = (FaixaCredito) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
