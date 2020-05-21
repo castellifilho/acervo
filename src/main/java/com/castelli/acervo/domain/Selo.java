@@ -1,12 +1,16 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Selo implements Serializable {
@@ -17,16 +21,18 @@ public class Selo implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	@ManyToOne
-	@JoinColumn(name = "gravadora_id")
-	private Gravadora gravadora;
-	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "SELO_GRAVADORA",
+	        joinColumns = @JoinColumn(name = "selo_id"),
+	        inverseJoinColumns = @JoinColumn(name = "gravadora_id"))
+	private List<Gravadora> gravadoras = new ArrayList<>();
+		
 	public Selo() {}
 
-	public Selo(Integer id, String nome, Gravadora gravadora) {
+	public Selo(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
-		this.gravadora = gravadora;
 	}
 
 	public Integer getId() {
@@ -45,12 +51,12 @@ public class Selo implements Serializable {
 		this.nome = nome;
 	}
 
-	public Gravadora getGravadora() {
-		return gravadora;
+	public List<Gravadora> getGravadoras() {
+		return gravadoras;
 	}
 
-	public void setGravadora(Gravadora gravadora) {
-		this.gravadora = gravadora;
+	public void setGravadoras(List<Gravadora> gravadoras) {
+		this.gravadoras = gravadoras;
 	}
 
 	@Override

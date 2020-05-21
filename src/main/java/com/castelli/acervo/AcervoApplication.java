@@ -1,12 +1,15 @@
 package com.castelli.acervo;
 
 import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import com.castelli.acervo.domain.Artista;
 import com.castelli.acervo.domain.Colecao;
+import com.castelli.acervo.domain.Disco;
 import com.castelli.acervo.domain.Estilo;
 import com.castelli.acervo.domain.Funcao;
 import com.castelli.acervo.domain.Genero;
@@ -22,6 +25,7 @@ import com.castelli.acervo.domain.Pais;
 import com.castelli.acervo.domain.Selo;
 import com.castelli.acervo.domain.Serie;
 import com.castelli.acervo.repositories.ArtistaRepository;
+import com.castelli.acervo.repositories.ColecaoRepository;
 import com.castelli.acervo.repositories.EstiloRepository;
 import com.castelli.acervo.repositories.FuncaoRepository;
 import com.castelli.acervo.repositories.GeneroRepository;
@@ -33,6 +37,7 @@ import com.castelli.acervo.repositories.MusicaArtistaFuncaoRepository;
 import com.castelli.acervo.repositories.MusicaRepository;
 import com.castelli.acervo.repositories.PaisRepository;
 import com.castelli.acervo.repositories.SeloRepository;
+import com.castelli.acervo.repositories.SerieRepository;
 
 @SpringBootApplication
 public class AcervoApplication implements CommandLineRunner {
@@ -61,7 +66,11 @@ public class AcervoApplication implements CommandLineRunner {
 	private GrupoRepository grupoRepository;
 	@Autowired
 	private GrupoMusicalRepository grupoMusicalRepository;
-
+	@Autowired
+	private ColecaoRepository colecaoRepository;
+	@Autowired
+	private SerieRepository serieRepository;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(AcervoApplication.class, args);
@@ -165,10 +174,14 @@ public class AcervoApplication implements CommandLineRunner {
 		funcaoRepository.saveAll(Arrays.asList(f1, f2, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11));
 		artistaRepository.saveAll(Arrays.asList(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28));
 
-		Genero g1 = new Genero(null, "Clássico", p6);
-		Genero g2 = new Genero(null, "Samba", p5);
-		Genero g3 = new Genero(null, "Seresta", p5);
-		Genero g4 = new Genero(null, "Baião", p5);
+		Genero g1 = new Genero(null, "Clássico", "Romantico", p6);
+		Genero g2 = new Genero(null, "Clássico", "", p6);
+		Genero g3 = new Genero(null, "Samba", "Samba-chôro", p5);
+		Genero g4 = new Genero(null, "Seresta", "", p5);
+		Genero g5 = new Genero(null, "Baião", "", p5);
+		Genero g6 = new Genero(null, "Latina", "Valsa", p5);
+		Genero g7 = new Genero(null, "Clássico", "Barroco", p6);
+		Genero g8 = new Genero(null, "Samba", "Samba-canção", p5);
 		Estilo e1 = new Estilo(null, "Concerto");
 		Estilo e2 = new Estilo(null, "Ballet ");
 		Estilo e3 = new Estilo(null, "Suite");
@@ -176,18 +189,18 @@ public class AcervoApplication implements CommandLineRunner {
 		Estilo e5 = new Estilo(null, "Barcarola");
 		Estilo e6 = new Estilo(null, "Partita");
 		Musica m1 = new MusicaMovimento(null, "Concerto para Piano e Orquestra nº 5", g1, "Opus 73 (Imperador)", e1);
-		Musica m2 = new MusicaMovimento(null, "O Lago dos Cisnes", g1, "", e2 ); 
-		Musica m3 = new MusicaMovimento(null, "Quadros de Uma Exposição", g1, "", e3);
-		Musica m4 = new MusicaMovimento(null, "Don Giovanni", g1, "", e4);
-		Musica m5 = new MusicaEstilo(null, "Barcarole", g1,  "Opus 60", e5);
-		Musica m6 = new MusicaMovimento (null, "Partita nº 4", g1, "", e6);
-		Musica m7 = new Musica(null, "Página de Dôr", g2);
-		Musica m8 = new Musica(null, "Urubu", g2);
-		Musica m9 = new Musica(null, "A Volta do Boêmio", g3);
-		Musica m10 = new Musica(null, "Risque", g3);
-		Musica m11 = new Musica(null, "Kalú", g4);
-		Musica m12 = new Musica(null, "Fim de Comédia", g2);
-		generoRepository.saveAll(Arrays.asList(g1, g2, g3, g4));
+		Musica m2 = new MusicaMovimento(null, "O Lago dos Cisnes", g2, "", e2 ); 
+		Musica m3 = new MusicaMovimento(null, "Quadros de Uma Exposição", g1, "", e3 );
+		Musica m4 = new MusicaMovimento(null, "Don Giovanni", g2, "", e4);
+		Musica m5 = new MusicaEstilo(null, "Barcarolle", g1,  "Opus 60", e5);
+		Musica m6 = new MusicaMovimento (null, "Partita nº 4", g7, "", e6);
+		Musica m7 = new Musica(null, "Página de Dôr", g6);
+		Musica m8 = new Musica(null, "Urubu", g3);
+		Musica m9 = new Musica(null, "A Volta do Boêmio", g4);
+		Musica m10 = new Musica(null, "Risque", g4);
+		Musica m11 = new Musica(null, "Kalú", g5);
+		Musica m12 = new Musica(null, "Fim de Comédia", g8);
+		generoRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5, g6, g7, g8));
 		estiloRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5, e6));
 		musicaRepository.saveAll(Arrays.asList(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12));
 				
@@ -237,18 +250,18 @@ public class AcervoApplication implements CommandLineRunner {
 		musicaArtistaFuncaoRepository.saveAll(Arrays.asList(maf1, maf2, maf3, maf4, maf5, maf6, 
 		         maf7, maf8, maf9, maf10, maf11, maf12, maf13));
 		
-		Gravadora gv1 = new Gravadora(null, "Editora Abril S/A", "Grupo Abril", 1950, 0, p5);
+		Gravadora gv1 = new Gravadora(null, "Abril S/A Cultural e Industrial", " Foi transformada em 1982 na Editora Nova Cultural ", 1950, 1982, p5);
 		Gravadora gv2 = new Gravadora(null, "EMI Records Lda", "Vendida para a PLG Holdco Ltd. (Parlophone Label Group)", 1973, 2012, p9);
 		Gravadora gv3 = new Gravadora(null, "Ariola Discos Fonográficos e Fitas Magnéticas Ltda", 
-			"Comprada em 1983 pela Polygram, passando a se chamar Barclay até 1987", 1980, 1983, p5);
+				"Comprada em 1983 pela Polygram, passando a se chamar Barclay até 1987", 1980, 1983, p5);
 		Gravadora gv4 = new Gravadora(null, "Companhia Industrial de Discos - CID", "Em atividade", 1958, null, p5);
-		Gravadora gv5 = new Gravadora(null, "Indústrias Elétricas e Musicais Fábrica Odeon S.A.",
-			"Em 1974, a empresa foi renomeada como EMI-Odeon Fonográfica, Industrial e Eletrônica SA.", 1931, 1974, p5);
-		Selo s1 = new Selo(null, "ABRIL CULTURAL", gv1);
-		Selo s2 = new Selo(null, "EMI Angel ", gv2);
-		Selo s3 = new Selo(null, "Ariola ", gv3);
-		Selo s4 = new Selo(null, "CID ", gv4);
-		Selo s5 = new Selo(null, "ODEON ", gv5);
+		Gravadora gv5 = new Gravadora(null, "Indústrias Elétricas e Musicais Fábrica Odeon S.A.", 
+				"Em 1974, a empresa foi renomeada como EMI-Odeon Fonográfica, Industrial e Eletrônica SA.", 1931, 1974, p5);
+		Selo s1 = new Selo(null, "ABRIL CULTURAL");
+		Selo s2 = new Selo(null, "EMI Angel ");
+		Selo s3 = new Selo(null, "Ariola ");
+		Selo s4 = new Selo(null, "CID ");
+		Selo s5 = new Selo(null, "ODEON");
 		Grupo gp1 = new Grupo(null, "Orquestra Sinfônica");
 		Grupo gp2 = new Grupo(null, "Orquestra de Cãmara");
 		Grupo gp3 = new Grupo(null, "Coral");
@@ -257,10 +270,39 @@ public class AcervoApplication implements CommandLineRunner {
 		GrupoMusical gm3 = new GrupoMusical(null, "Orquestra Sinfônica de Ljubjana", "", gp1, p7);
 		GrupoMusical gm4 = new GrupoMusical(null, "Orquestra de Câmara de Praga", "", gp2, p8);
 		GrupoMusical gm5 = new GrupoMusical(null, "Coral da Filarmônica de Praga", "", gp3, p8);
+		s1.getGravadoras().addAll(Arrays.asList(gv1));
+		s2.getGravadoras().addAll(Arrays.asList(gv2));
+		s3.getGravadoras().addAll(Arrays.asList(gv3));
+		s4.getGravadoras().addAll(Arrays.asList(gv4));
+		s5.getGravadoras().addAll(Arrays.asList(gv5));
+		gv1.getSelos().addAll(Arrays.asList(s1));
+		gv2.getSelos().addAll(Arrays.asList(s2));
+		gv3.getSelos().addAll(Arrays.asList(s3));
+		gv4.getSelos().addAll(Arrays.asList(s4));
+		gv5.getSelos().addAll(Arrays.asList(s5));
 		gravadoraRepository.saveAll(Arrays.asList(gv1, gv2, gv3, gv4, gv5));
 		seloRepository.saveAll(Arrays.asList(s1, s2, s3, s4, s5));
 		grupoRepository.saveAll(Arrays.asList(gp1, gp2, gp3));
 		grupoMusicalRepository.saveAll(Arrays.asList(gm1, gm2, gm3, gm4, gm5));
+		
+		Colecao c1 = new Colecao(null, "Mestres da Música", "Capa Gatefold com 12 páginas, mais 1 livreto", "coleção", gv1);
+		Colecao c2 = new Colecao(null, "Mestres da Música (2ª edição)", "Capa Gatefold com 12 páginas, mais 1 livreto", "coleção", gv1);
+		Colecao c3 = new Colecao(null, "As Grandes Óperas", "Capa Gatefold com 12 páginas, mais 1 livreto", "coleção", gv1);
+		Colecao c4 = new Colecao(null, "Música Popular Brasileira", "Capa Gatefold com 12 páginas", "coleção", gv1);
+		Colecao c5 = new Colecao(null, "Bons Tempos", "Serestas", "coleção", gv4);
+		Serie se1 = new Serie(null, "nº 1", c2);
+		Serie se2 = new Serie(null, "nº 2", c2);
+		Serie se3 = new Serie(null, "nº 36", c1);
+		Serie se4 = new Serie(null, "nº 5", c3);
+		Serie se5 = new Serie(null, "nº 2", c4);
+		Serie se6 = new Serie(null, "Vol. 3", c5);
+		colecaoRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5));
+		serieRepository.saveAll(Arrays.asList(se1, se2, se3, se4, se5, se6));
+		
+		//Faixa fx = new Faixa(null, faixa, musica, grupoMusical, disco);
+		//FaixaCredito fc = new FaixaCredito(faixa, artista, funcao);
+		//Disco d = new Disco(null, titulo, compositor, assunto, matriz1, matriz2, comercial, lancado, nota, disco, capa, fisico, selo, gravadora, serie, pais)
+		
 		
 	}
 }

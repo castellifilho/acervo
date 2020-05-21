@@ -1,11 +1,14 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -23,6 +26,9 @@ public class Gravadora implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "pais_id")
 	private Pais pais;
+	
+	@ManyToMany(mappedBy = "gravadoras")
+	private List<Selo> selos = new ArrayList<>();
 
 	public Gravadora() {}
 
@@ -83,6 +89,14 @@ public class Gravadora implements Serializable {
 		this.pais = pais;
 	}
 
+	public List<Selo> getSelos() {
+		return selos;
+	}
+
+	public void setSelos(List<Selo> selos) {
+		this.selos = selos;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -16,6 +16,7 @@ public class Genero implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private String subgenero;
 	
 	@ManyToOne
 	@JoinColumn(name = "pais_id")
@@ -23,9 +24,10 @@ public class Genero implements Serializable {
 	
 	public Genero() {}
 
-	public Genero(Integer id, String nome, Pais pais) {
+	public Genero(Integer id, String nome, String subgenero, Pais pais) {
 		this.id = id;
 		this.nome = nome;
+		this.subgenero = subgenero;
 		this.pais = pais;
 	}
 
@@ -45,6 +47,14 @@ public class Genero implements Serializable {
 		this.nome = nome;
 	}
 
+	public String getSubgenero() {
+		return subgenero;
+	}
+
+	public void setSubgenero(String subgenero) {
+		this.subgenero = subgenero;
+	}	
+	
 	public Pais getPais() {
 		return pais;
 	}

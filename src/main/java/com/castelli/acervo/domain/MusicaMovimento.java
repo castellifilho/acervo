@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class MusicaMovimento extends Musica {
@@ -19,7 +18,7 @@ public class MusicaMovimento extends Musica {
 	private Estilo estilo;
 	
 	//@JsonIgnore
-	@OneToMany(mappedBy="musicaMovimento")
+	@OneToMany(mappedBy="musica")
 	private List<Movimento> movimentos = new ArrayList<>();
 	
 	public MusicaMovimento() {}
@@ -46,7 +45,7 @@ public class MusicaMovimento extends Musica {
 		this.estilo = estilo;
 	}
 
-	@JsonIgnore
+	//@JsonIgnore
 	public List<Movimento> getMovimentos() {
 		return movimentos;
 	}

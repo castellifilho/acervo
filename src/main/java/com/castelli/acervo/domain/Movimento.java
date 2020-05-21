@@ -1,13 +1,13 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Movimento implements Serializable {
@@ -22,15 +22,15 @@ public class Movimento implements Serializable {
 	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="musica_id")
-	private Musica musicaMovimento;
+	private MusicaMovimento musica;
 	
 	public Movimento() {}
 
-	public Movimento(Integer id, String movimento, String andamento, Musica musicaMovimento) {
+	public Movimento(Integer id, String movimento, String andamento, MusicaMovimento musica) {
 		this.id = id;
 		this.movimento = movimento;
 		this.andamento = andamento;
-		this.musicaMovimento = musicaMovimento;
+		this.musica = musica;
 	}
 
 	public Integer getId() {
@@ -57,12 +57,13 @@ public class Movimento implements Serializable {
 		this.andamento = andamento;
 	}
 
+	@JsonIgnore
 	public Musica getMusicaMovimento() {
-		return musicaMovimento;
+		return musica;
 	}
 
-	public void setMusicaMovimento(Musica musicaMovimento) {
-		this.musicaMovimento = musicaMovimento;
+	public void setMusicaMovimento(MusicaMovimento musica) {
+		this.musica = musica;
 	}
 	
 	@Override
