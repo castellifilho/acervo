@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.castelli.acervo.domain.Movimento;
-import com.castelli.acervo.services.MovimentoService;
+import com.castelli.acervo.domain.Disco;
+import com.castelli.acervo.services.DiscoService;
 
 @RestController
-@RequestMapping(value="/movimentos")
-public class MovimentoResource {
+@RequestMapping(value="/discos")
+public class DiscoResource {
 	
 	@Autowired
-	private MovimentoService service;
+	private DiscoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Movimento> find(@PathVariable Integer id) {
-		Movimento obj = service.find(id);
+	public ResponseEntity<Disco> find(@PathVariable Integer id) {
+		Disco obj = service.find(id);
 		return ResponseEntity.ok().body(obj);		
 	}
 }

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Artista implements Serializable {
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,10 +39,11 @@ public class Artista implements Serializable {
 	        inverseJoinColumns = @JoinColumn(name = "funcao_id"))
 	private List<Funcao> funcoes = new ArrayList<>();
 	
-	@JsonIgnore
+	@JsonIgnore  //Indiferente para endpoint musicas
 	@OneToMany(mappedBy = "id.artista")
 	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.artista")
 	private Set<FaixaCredito> faixaItens = new HashSet<>();
 	
@@ -105,6 +106,7 @@ public class Artista implements Serializable {
 		this.pais = pais;
 	}
 
+	//@JsonIgnore    // é indiferente para o endpoint funcoes
 	public List<Funcao> getFuncoes() {
 		return funcoes;
 	}
@@ -113,7 +115,7 @@ public class Artista implements Serializable {
 		this.funcoes = funcoes;
 	}
 	
-	@JsonIgnore     // Acrescentei 7/04                                 
+	@JsonIgnore 
 	public Set<MusicaArtistaFuncao> getMusicaItens() {
 		return musicaItens;
 	}
@@ -157,4 +159,5 @@ public class Artista implements Serializable {
 			return false;
 		return true;
 	}
+
 }

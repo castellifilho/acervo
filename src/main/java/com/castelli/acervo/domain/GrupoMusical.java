@@ -16,7 +16,7 @@ public class GrupoMusical implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome; 
-	private String componentes;
+	private String componente;
 	
 	@ManyToOne
 	@JoinColumn(name = "grupo_id")
@@ -28,10 +28,10 @@ public class GrupoMusical implements Serializable {
 
 	public GrupoMusical() {}
 
-	public GrupoMusical(Integer id, String nome, String componentes, Grupo grupo, Pais pais) {
+	public GrupoMusical(Integer id, String nome, String componente, Grupo grupo, Pais pais) {
 		this.id = id;
 		this.nome = nome;
-		this.componentes = componentes;
+		this.componente = componente;
 		this.grupo = grupo;
 		this.pais = pais;
 	}
@@ -52,12 +52,12 @@ public class GrupoMusical implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getComponentes() {
-		return componentes;
+	public String getComponente() {
+		return componente;
 	}
 
-	public void setComponentes(String componentes) {
-		this.componentes = componentes;
+	public void setComponente(String componente) {
+		this.componente = componente;
 	}
 
 	public Grupo getGrupo() {

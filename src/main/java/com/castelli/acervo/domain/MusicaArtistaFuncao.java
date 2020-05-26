@@ -21,19 +21,22 @@ public class MusicaArtistaFuncao implements Serializable {
 		id.setFuncao(funcao);
 	}
 
-	public Musica getMusica() {
+	@JsonIgnore
+    public Musica getMusica() {
 		return id.getMusica();
 	}
 	
-	@JsonIgnore
+	//@JsonIgnore
 	public Artista getArtista() {
 		return id.getArtista();
 	}
 	
+	@JsonIgnore  // Pega todos os artistas com a mesma função
 	public Funcao getFuncao() {
 		return id.getFuncao();
 	}
 	
+	@JsonIgnore
 	public MusicaArtistaFuncaoPK getId() {
 		return id;
 	}
@@ -66,4 +69,5 @@ public class MusicaArtistaFuncao implements Serializable {
 			return false;
 		return true;
 	}
+
 }

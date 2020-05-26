@@ -19,16 +19,16 @@ public class Disco implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Integer id;
-	private String título;
+	private String titulo; 
 	private String compositor;
 	private String assunto;
 	private String matriz1;
 	private String matriz2;
 	private String comercial;
 	private Integer lancado;
-	private String nota;
+	private String nota; 
 	private Integer disco;
 	private Integer capa;
 	private Integer fisico;
@@ -38,8 +38,12 @@ public class Disco implements Serializable {
 	private Selo selo;
 	
 	@ManyToOne
-	@JoinColumn(name = "colecao_id")
-	private Colecao colecao;
+	@JoinColumn(name = "gravadora_id")
+	private Gravadora gravadora;
+	
+	@ManyToOne
+	@JoinColumn(name = "serie_id")
+	private Serie serie;
 	
 	@ManyToOne
 	@JoinColumn(name = "pais_id")
@@ -51,11 +55,11 @@ public class Disco implements Serializable {
 
 	public Disco() {}
 
-	public Disco(Integer id, String título, String compositor, String assunto, String matriz1, String matriz2,
+	public Disco(Integer id, String titulo, String compositor, String assunto, String matriz1, String matriz2,
 			String comercial, Integer lancado, String nota, Conservacao disco, Conservacao capa, Fisico fisico, Selo selo,
-			Colecao colecao, Pais pais) {
+			Gravadora gravadora, Serie serie, Pais pais) {
 		this.id = id;
-		this.título = título;
+		this.titulo = titulo;
 		this.compositor = compositor;
 		this.assunto = assunto;
 		this.matriz1 = matriz1;
@@ -67,7 +71,8 @@ public class Disco implements Serializable {
 		this.capa = capa.getCod();
 		this.fisico = fisico.getCod();
 		this.selo = selo;
-		this.colecao = colecao;
+		this.gravadora = gravadora;
+		this.serie = serie;
 		this.pais = pais;
 	}
 
@@ -79,12 +84,12 @@ public class Disco implements Serializable {
 		this.id = id;
 	}
 
-	public String getTítulo() {
-		return título;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setTítulo(String título) {
-		this.título = título;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getCompositor() {
@@ -175,12 +180,20 @@ public class Disco implements Serializable {
 		this.selo = selo;
 	}
 
-	public Colecao getColecao() {
-		return colecao;
+	public Gravadora getGravadora() {
+		return gravadora;
 	}
 
-	public void setColecao(Colecao colecao) {
-		this.colecao = colecao;
+	public void setGravadora(Gravadora gravadora) {
+		this.gravadora = gravadora;
+	}
+
+	public Serie getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Serie serie) {
+		this.serie = serie;
 	}
 
 	public Pais getPais() {

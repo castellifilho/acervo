@@ -1,23 +1,24 @@
 package com.castelli.acervo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Musica implements Serializable {
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -28,6 +29,10 @@ public class Musica implements Serializable {
 	@JoinColumn(name = "genero_id")
 	private Genero genero;
 	
+	@OneToMany(mappedBy="musica")
+	private List<Movimento> movimentos = new ArrayList<>();
+	
+	//@JsonIgnore   //19 pega a musica, movimentos e artista, não pega a função.
 	@OneToMany(mappedBy = "id.musica")
 	private Set<MusicaArtistaFuncao> musicaItens = new HashSet<>();
 	
@@ -62,8 +67,17 @@ public class Musica implements Serializable {
 	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
+	
+	@JsonIgnore  //20 não pega os movimentos no endpoint faixas
+	public List<Movimento> getMovimentos() {
+		return movimentos;
+	}
 
-	@JsonIgnore          // Acrescentei 7/04
+	public void setMovimentos(List<Movimento> movimentos) {
+		this.movimentos = movimentos;
+	}
+
+	//@JsonIgnore  
 	public Set<MusicaArtistaFuncao> getMusicaItens() {
 		return musicaItens;
 	}
@@ -97,4 +111,5 @@ public class Musica implements Serializable {
 			return false;
 		return true;
 	}
+
 }

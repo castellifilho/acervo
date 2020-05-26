@@ -16,6 +16,8 @@ public class Genero implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private String subgenero;
+	private String estilo;
 	
 	@ManyToOne
 	@JoinColumn(name = "pais_id")
@@ -23,9 +25,11 @@ public class Genero implements Serializable {
 	
 	public Genero() {}
 
-	public Genero(Integer id, String nome, Pais pais) {
+	public Genero(Integer id, String nome, String subgenero, String estilo, Pais pais) {
 		this.id = id;
 		this.nome = nome;
+		this.subgenero = subgenero;
+		this.estilo = estilo;
 		this.pais = pais;
 	}
 
@@ -45,12 +49,28 @@ public class Genero implements Serializable {
 		this.nome = nome;
 	}
 
+	public String getSubgenero() {
+		return subgenero;
+	}
+
+	public void setSubgenero(String subgenero) {
+		this.subgenero = subgenero;
+	}	
+	
 	public Pais getPais() {
 		return pais;
 	}
 
 	public void setPais(Pais pais) {
 		this.pais = pais;
+	}
+	
+	public String getEstilo() {
+		return estilo;
+	}
+
+	public void setEstilo(String estilo) {
+		this.estilo = estilo;
 	}
 	
 	@Override

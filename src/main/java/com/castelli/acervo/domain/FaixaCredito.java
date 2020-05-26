@@ -21,11 +21,11 @@ public class FaixaCredito implements Serializable {
 		id.setFuncao(funcao);
 	}
 	
+	@JsonIgnore  //Não acessa os arquivos
 	public Faixa getFaixa() {
 		return id.getFaixa();
 	}
 	
-	@JsonIgnore
 	public Artista getArtista() {
 		return id.getArtista();
 	}

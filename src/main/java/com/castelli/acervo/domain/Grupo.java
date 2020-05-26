@@ -13,13 +13,13 @@ public class Grupo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String grupo;
+	private String nome;
 	
 	public Grupo() {}
 
-	public Grupo(Integer id, String grupo) {
+	public Grupo(Integer id, String nome) {
 		this.id = id;
-		this.grupo = grupo;
+		this.nome = nome;
 	}
 
 	public Integer getId() {
@@ -30,12 +30,12 @@ public class Grupo implements Serializable {
 		this.id = id;
 	}
 
-	public String getGrupo() {
-		return grupo;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setGrupo(String grupo) {
-		this.grupo = grupo;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	@Override
