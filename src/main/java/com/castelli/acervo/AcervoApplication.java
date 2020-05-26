@@ -1,12 +1,10 @@
 package com.castelli.acervo;
 
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import com.castelli.acervo.domain.Artista;
 import com.castelli.acervo.domain.Colecao;
 import com.castelli.acervo.domain.Disco;

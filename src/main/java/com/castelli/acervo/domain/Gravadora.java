@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Gravadora implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -91,7 +89,6 @@ public class Gravadora implements Serializable {
 		this.pais = pais;
 	}
 
-	@JsonIgnore
 	public List<Selo> getSelos() {
 		return selos;
 	}
@@ -125,3 +122,4 @@ public class Gravadora implements Serializable {
 		return true;
 	}
 }
+
