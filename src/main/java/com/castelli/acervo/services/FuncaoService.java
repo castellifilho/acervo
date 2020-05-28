@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.castelli.acervo.domain.Funcao;
+import com.castelli.acervo.dto.FuncaoDTO;
 import com.castelli.acervo.repositories.FuncaoRepository;
 import com.castelli.acervo.services.exceptions.DataIntegrityException;
 import com.castelli.acervo.services.exceptions.ObjectNotFoundException;
@@ -54,4 +55,7 @@ public class FuncaoService {
 		return repo.findAll(pageRequest);
 	}
 
+	public Funcao fromDto(FuncaoDTO objDto) {
+		return new Funcao(objDto.getId(), objDto.getNome());
+	}
 }

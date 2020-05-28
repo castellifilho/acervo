@@ -3,25 +3,26 @@ package com.castelli.acervo.domain;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Faixa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;   
+	private String faixa;
 	
 	@ManyToOne
 	@JoinColumn(name = "musica_id")
@@ -40,9 +41,9 @@ public class Faixa implements Serializable {
 	
 	public Faixa() {}
 
-	public Faixa(Integer id, String nome, Musica musica, GrupoMusical grupoMusical, Disco disco) {
+	public Faixa(Integer id, String faixa, Musica musica, GrupoMusical grupoMusical, Disco disco) {
 		this.id = id;
-		this.nome = nome;
+		this.faixa = faixa;
 		this.musica = musica;
 		this.grupoMusical = grupoMusical;
 		this.disco = disco;
@@ -56,12 +57,12 @@ public class Faixa implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getFaixa() {
+		return faixa;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setFaixa(String faixa) {
+		this.faixa = faixa;
 	}
 
 	public Musica getMusica() {
@@ -123,4 +124,5 @@ public class Faixa implements Serializable {
 			return false;
 		return true;
 	}
-}
+} 
+
