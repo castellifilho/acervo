@@ -14,6 +14,7 @@ import com.castelli.acervo.domain.Pais;
 import com.castelli.acervo.dto.ArtistaDTO;
 import com.castelli.acervo.dto.ArtistaNewDTO;
 import com.castelli.acervo.repositories.ArtistaRepository;
+import com.castelli.acervo.repositories.FuncaoRepository;
 import com.castelli.acervo.services.exceptions.DataIntegrityException;
 import com.castelli.acervo.services.exceptions.ObjectNotFoundException;
 
@@ -23,51 +24,62 @@ public class ArtistaService {
 	@Autowired
 	private ArtistaRepository repo;
 	
+	@Autowired
+	private FuncaoRepository repoFuncao;
+
 	public Artista find(Integer id) {
 		Optional<Artista> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Artista.class.getName()));
 	}
-	
+
 	public Artista insert(Artista obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-	
+
 	public Artista update(Artista obj) {
 		find(obj.getId());
 		return repo.save(obj);
 	}
-	
+
 	public void delete(Integer id) {
 		find(id);
 		try {
 			repo.deleteById(id);
-		}catch(DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir o artista.");
-		}				
+		}
 	}
-	
+
 	public List<Artista> findAll() {
 		return repo.findAll();
 	}
-	
+
 	public Page<Artista> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, 
-	                      Direction.valueOf(direction), orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 
 	public Artista fromDto(ArtistaDTO objDto) {
-		return new Artista(objDto.getId(), objDto.getAlias(), objDto.getNome(), objDto.getNascimento(), objDto.getObito(), null);
+		return new Artista(objDto.getId(), objDto.getAlias(), objDto.getNome(), objDto.getNascimento(),
+				objDto.getObito(), null);
 	}
-	
+
 	public Artista fromDto(ArtistaNewDTO objDto) {
 		Pais p = new Pais(objDto.getPaisId(), null);
-		Artista a = new Artista(null, objDto.getAlias(), objDto.getNome(), objDto.getNascimento(), objDto.getObito(), p);
+		Artista a = new Artista(null, objDto.getAlias(), objDto.getNome(), objDto.getNascimento(), objDto.getObito(),
+				p);
 		Funcao f = new Funcao(objDto.getFuncaoId(), null);
 		a.getFuncoes().add(f);
 		f.getArtistas().add(a);
-		return a;		
-	}	
+		return a;
+	}
+
+	public Page<Artista> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy,
+			String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		List<Funcao> funcoes = repoFuncao.findAllById(ids);
+		return repo.search(nome, funcoes, pageRequest);
+	}
 }

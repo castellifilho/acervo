@@ -4,14 +4,16 @@ import java.io.Serializable;
 import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 import com.castelli.acervo.domain.Artista;
+import com.castelli.acervo.services.validation.ArtistaUpdate;
 
+@ArtistaUpdate
 public class ArtistaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
-	@Length(min=5, max=120, message = "Tamanho deve estar entre 5 e 120 caracteres")
+	@Length(min=3, max=80, message = "Tamanho deve estar entre 3 e 80 caracteres")
 	private String alias;
 	
 	private String nome;

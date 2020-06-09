@@ -17,12 +17,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.castelli.acervo.domain.Artista;
 import com.castelli.acervo.dto.ArtistaDTO;
 import com.castelli.acervo.dto.ArtistaNewDTO;
+import com.castelli.acervo.resources.utils.URL;
 import com.castelli.acervo.services.ArtistaService;
 
 @RestController
-@RequestMapping(value="/artistas")
+@RequestMapping(value = "/artistas")
 public class ArtistaResource {
-	
 	@Autowired
 	private ArtistaService service;
 	
@@ -56,13 +56,13 @@ public class ArtistaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ArtistaDTO>> findAll() {
-		List<Artista> lista = service.findAll();
-		List<ArtistaDTO> listaDto = lista.stream().map(obj -> new 
-	                    ArtistaDTO(obj)).collect(Collectors.toList()); 
-		return ResponseEntity.ok().body(listaDto);			
-	}
+	//@RequestMapping(method=RequestMethod.GET)
+	//public ResponseEntity<List<ArtistaDTO>> findAll() {
+	//	List<Artista> lista = service.findAll();
+	//	List<ArtistaDTO> listaDto = lista.stream().map(obj -> new 
+	//                    ArtistaDTO(obj)).collect(Collectors.toList()); 
+	//	return ResponseEntity.ok().body(listaDto);			
+	//}
 	
 	@RequestMapping(value = "/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<ArtistaDTO>> findPage(
@@ -73,5 +73,20 @@ public class ArtistaResource {
 		Page<Artista> lista = service.findPage(page, linesPerPage, orderBy, direction);
 		Page<ArtistaDTO> listaDto = lista.map(obj -> new ArtistaDTO(obj)); 
 		return ResponseEntity.ok().body(listaDto);				
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<Page<ArtistaDTO>> findPage(
+			@RequestParam(value = "nome", defaultValue = "") String nome,
+			@RequestParam(value = "funcoes", defaultValue = "") String funcoes,
+			@RequestParam(value = "page", defaultValue = "0") Integer page, 
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+		String nomeDecode = URL.decodeParam(nome);
+		List<Integer> ids = URL.decodeIntList(funcoes);
+		Page<Artista> list = service.search(nomeDecode, ids, page, linesPerPage, orderBy, direction);
+		Page<ArtistaDTO> listDto = list.map(obj -> new ArtistaDTO(obj)); 
+		return ResponseEntity.ok().body(listDto);				
 	}
 }

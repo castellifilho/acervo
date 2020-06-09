@@ -1,11 +1,18 @@
 package com.castelli.acervo.dto;
 
 import java.io.Serializable;
+import javax.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
+import com.castelli.acervo.services.validation.ArtistaInsert;
 
+@ArtistaInsert
 public class ArtistaNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min=3, max=80, message = "Tamanho deve estar entre 3 e 80 caracteres")
 	private String alias;	
+	
 	private String nome;
 	private Integer nascimento;
 	private Integer obito;
